@@ -9,6 +9,56 @@
   <img mat-card-image class="logo-image" src="assets/images/globalblue.png" alt="GlobalBlue" />
 
   <mat-card-content>
+
+    <div class="row">
+      <label for="country" class="col-sm-2 col-form-label">Countries:</label>
+      <div class="col-6">
+        <select id="country" class="form-select form-select-sm" name="country" #country="ngModel"
+          [(ngModel)]="taxesDetails.country" (ngModelChange)="onCountryChange($event)">
+          <option *ngFor="let country of countryList" [value]="country">{{ country }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <hr />
+
+    <div class="row">
+      <label for="vatRate" class="col-sm-2 col-form-label">VAT Rate:</label>
+      <div class="col-4">
+        <ng-container *ngFor="let vatRate of vatRateList">
+          <input type="radio" name="vatRate" [value]="vatRate" (ngModelChange)="onVatRateChange($event)"
+            [(ngModel)]="taxesDetails.vatRate" />&nbsp;&nbsp;
+          <label>{{vatRate}}</label>&nbsp;&nbsp;
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="vatRate" class="col-sm-2 col-form-label">Price without VAT:</label>
+      <div class="col-sm-2">
+        <input type="number" class="form-control" id="priceWithoutVat" name="priceWithoutVat"
+          [(ngModel)]="taxesDetails.priceWithoutVat" (ngModelChange)="onPriceWithoutVATChange()"/>
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="vatRate" class="col-sm-2 col-form-label"> Value-Added Tax:</label>
+      <div class="col-sm-2">
+        <input type="number" class="form-control" id="valueAddedTax" name="valueAddedTax"
+          [(ngModel)]="taxesDetails.valueAddedTax" />
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="vatRate" class="col-sm-2 col-form-label"> Price incl. VAT:</label>
+      <div class="col-sm-2">
+        <input type="number" class="form-control" id="priceInclVat" name="priceInclVat"
+          [(ngModel)]="taxesDetails.priceWithVat" (ngModelChange)="onPriceWithVATChange()" />
+      </div>
+    </div>
+
+  </mat-card-content>
+  <!-- <mat-card-content>
     <div class="row">
       <mat-form-field appearance="fill">
         <mat-label>Country</mat-label>
@@ -54,5 +104,5 @@
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="calculateVat()">Calculate</button>
     <button mat-button color="warn">Cancel</button>
-  </mat-card-actions>
+  </mat-card-actions> -->
 </mat-card>
