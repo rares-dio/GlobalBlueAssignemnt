@@ -1,0 +1,58 @@
+<mat-toolbar color="primary">
+  <span class="title">GLOBAL BLUE - HOMEWORK</span>
+</mat-toolbar>
+
+<mat-card class="card-container">
+
+  <mat-card-title class="card-title">VAT Calculation</mat-card-title>
+  <mat-card-subtitle class="card-title">Calculate VAT per. Country</mat-card-subtitle>
+  <img mat-card-image class="logo-image" src="assets/images/globalblue.png" alt="GlobalBlue" />
+
+  <mat-card-content>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Country</mat-label>
+        <mat-select [formControl]="countries" multiple>
+          <mat-select-trigger>
+            {{countries.value?.[0] || ''}}
+            <span *ngIf="(countries.value?.length || 0) > 1" class="example-additional-selection">
+              (+{{(countries.value?.length || 0) - 1}} {{countries.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let topping of countryList" [value]="topping">{{topping}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <hr />
+    <div class="row">
+      <mat-label>VAT Rate</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;
+      <mat-checkbox>6%</mat-checkbox>&nbsp;&nbsp;
+      <mat-checkbox>13%</mat-checkbox>&nbsp;&nbsp;
+      <mat-checkbox>23%</mat-checkbox>&nbsp;&nbsp;
+    </div>
+    <hr />
+    <div class="form-group row">
+      <mat-checkbox>Price without VAT</mat-checkbox>&nbsp;&nbsp;
+      <mat-form-field class="example-full-width">
+        <input matInput value="">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-checkbox>Value-Added Tax</mat-checkbox>&nbsp;&nbsp;
+      <mat-form-field class="example-full-width">
+        <input matInput value="">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-checkbox>Price incl. VAT</mat-checkbox>&nbsp;&nbsp;
+      <mat-form-field class="example-full-width">
+        <input matInput value="">
+      </mat-form-field>
+    </div>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="calculateVat()">Calculate</button>
+    <button mat-button color="warn">Cancel</button>
+  </mat-card-actions>
+</mat-card>

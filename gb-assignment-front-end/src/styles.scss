@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.title {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+}
+
+.card-container {
+    width: 50%;
+    margin: auto;
+}
+
+.card-title {
+    text-align: center;
+}
+
+.logo-image {
+    width: 20%;
+    height: 20%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mat-mdc-card-header {
+    text-align: center;
+    background-color: #eaf0f9;
+}
