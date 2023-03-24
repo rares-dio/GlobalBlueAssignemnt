@@ -10,99 +10,86 @@
 
   <mat-card-content>
 
-    <div class="row">
-      <label for="country" class="col-sm-2 col-form-label">Countries:</label>
-      <div class="col-6">
-        <select id="country" class="form-select form-select-sm" name="country" #country="ngModel"
-          [(ngModel)]="taxesDetails.country" (ngModelChange)="onCountryChange($event)">
-          <option *ngFor="let country of countryList" [value]="country">{{ country }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <hr />
+    <mat-grid-list [cols]="colsNr" rowHeight="100px" (window:resize)="onResize($event)" [rowHeight]="matGridRowHight"
+      class="grid-list">
+      <mat-grid-tile>
+        <mat-label>Country:</mat-label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-select name="country" #country="ngModel" [(ngModel)]="taxDetail.country"
+            (ngModelChange)="onCountryChange($event)">
+            <mat-option *ngFor="let country of countryList" [value]="country">{{country}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile></mat-grid-tile>
+      <mat-grid-tile>
+        <mat-label>VAT Rate:</mat-label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-radio-group aria-label="VAT Rate" [(ngModel)]="taxDetail.vatRate" name="vatRate">
+          <mat-radio-button *ngFor="let vatRate of vatRateList" [value]="vatRate"
+            (change)="onVatRateChange($event)">{{vatRate}}</mat-radio-button>
+        </mat-radio-group>
+      </mat-grid-tile>
+    </mat-grid-list>
 
-    <div class="row">
-      <label for="vatRate" class="col-sm-2 col-form-label">VAT Rate:</label>
-      <div class="col-4">
-        <ng-container *ngFor="let vatRate of vatRateList">
-          <input type="radio" name="vatRate" [value]="vatRate" (ngModelChange)="onVatRateChange($event)"
-            [(ngModel)]="taxesDetails.vatRate" />&nbsp;&nbsp;
-          <label>{{vatRate}}</label>&nbsp;&nbsp;
-        </ng-container>
-      </div>
-    </div>
+    <mat-grid-list [cols]="colsNr" (window:resize)="onResize($event)" [rowHeight]="matGridRowHight">
+      <mat-grid-tile>
+        <mat-label>Price without VAT:</mat-label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <form class="input-form">
+          <mat-form-field appearance="outline" class="input-full-width">
+            <input matInput type="number" matInput [(ngModel)]="taxDetail.priceWithoutVat" id="priceWithoutVat"
+              name="priceWithoutVat" #priceWithoutVat="ngModel" (ngModelChange)="onPriceWithoutVATChange()" required
+              minlength="1" pattern="^[1-9,.][0-9,.]*$" zeroCheck>
+            <mat-error *ngIf="(priceWithoutVat.touched || priceWithoutVat.dirty) && priceWithoutVat.invalid">Introduce
+              only numbers! It thas to be different than 0</mat-error>
+          </mat-form-field>
+        </form>
+      </mat-grid-tile>
+      <mat-grid-tile></mat-grid-tile>
 
-    <div class="row">
-      <label for="vatRate" class="col-sm-2 col-form-label">Price without VAT:</label>
-      <div class="col-sm-2">
-        <input type="number" class="form-control" id="priceWithoutVat" name="priceWithoutVat"
-          [(ngModel)]="taxesDetails.priceWithoutVat" (ngModelChange)="onPriceWithoutVATChange()"/>
-      </div>
-    </div>
+      <mat-grid-tile>
+        <mat-label>Value-Added Tax:</mat-label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <form class="input-form">
+          <mat-form-field appearance="outline" class="input-full-width">
+            <input matInput type="number" matInput [(ngModel)]="taxDetail.vat" #vat="ngModel" id="vat" name="vat"
+              (ngModelChange)="onVatInputChange()" required minlength="1" pattern="^[1-9,.][0-9,.]*$" zeroCheck>
+            <mat-error *ngIf="(vat.touched || vat.dirty) && vat.invalid">Introduce only numbers! It thas to be different
+              than 0</mat-error>
+          </mat-form-field>
+        </form>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-label *ngIf="!selectedVATFromList">
+          Custom Value Added tax ({{customVAT}}%)
+        </mat-label>
+      </mat-grid-tile>
 
-    <div class="row">
-      <label for="vatRate" class="col-sm-2 col-form-label"> Value-Added Tax:</label>
-      <div class="col-sm-2">
-        <input type="number" class="form-control" id="valueAddedTax" name="valueAddedTax"
-          [(ngModel)]="taxesDetails.valueAddedTax" />
-      </div>
-    </div>
-
-    <div class="row">
-      <label for="vatRate" class="col-sm-2 col-form-label"> Price incl. VAT:</label>
-      <div class="col-sm-2">
-        <input type="number" class="form-control" id="priceInclVat" name="priceInclVat"
-          [(ngModel)]="taxesDetails.priceWithVat" (ngModelChange)="onPriceWithVATChange()" />
-      </div>
-    </div>
-
+      <mat-grid-tile>
+        <mat-label>Price incl. VAT:</mat-label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <form class="input-form">
+          <mat-form-field appearance="outline" class="input-full-width">
+            <input matInput type="number" matInput [(ngModel)]="taxDetail.priceWithVat" #priceWithVat="ngModel"
+              id="priceWithVat" name="priceWithVat" (ngModelChange)="onPriceWithVATChange()" required minlength="1"
+              pattern="^[1-9,.][0-9,.]*$" zeroCheck>
+            <mat-error *ngIf="(priceWithVat.touched || priceWithVat.dirty) && priceWithVat.invalid">Introduce only
+              numbers! It thas to be different
+              than 0</mat-error>
+          </mat-form-field>
+        </form>
+      </mat-grid-tile>
+      <mat-grid-tile></mat-grid-tile>
+    </mat-grid-list>
   </mat-card-content>
-  <!-- <mat-card-content>
-    <div class="row">
-      <mat-form-field appearance="fill">
-        <mat-label>Country</mat-label>
-        <mat-select [formControl]="countries" multiple>
-          <mat-select-trigger>
-            {{countries.value?.[0] || ''}}
-            <span *ngIf="(countries.value?.length || 0) > 1" class="example-additional-selection">
-              (+{{(countries.value?.length || 0) - 1}} {{countries.value?.length === 2 ? 'other' : 'others'}})
-            </span>
-          </mat-select-trigger>
-          <mat-option *ngFor="let topping of countryList" [value]="topping">{{topping}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <hr />
-    <div class="row">
-      <mat-label>VAT Rate</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;
-      <mat-checkbox>6%</mat-checkbox>&nbsp;&nbsp;
-      <mat-checkbox>13%</mat-checkbox>&nbsp;&nbsp;
-      <mat-checkbox>23%</mat-checkbox>&nbsp;&nbsp;
-    </div>
-    <hr />
-    <div class="form-group row">
-      <mat-checkbox>Price without VAT</mat-checkbox>&nbsp;&nbsp;
-      <mat-form-field class="example-full-width">
-        <input matInput value="">
-      </mat-form-field>
-    </div>
-    <div class="row">
-      <mat-checkbox>Value-Added Tax</mat-checkbox>&nbsp;&nbsp;
-      <mat-form-field class="example-full-width">
-        <input matInput value="">
-      </mat-form-field>
-    </div>
-    <div class="row">
-      <mat-checkbox>Price incl. VAT</mat-checkbox>&nbsp;&nbsp;
-      <mat-form-field class="example-full-width">
-        <input matInput value="">
-      </mat-form-field>
-    </div>
-
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="calculateVat()">Calculate</button>
-    <button mat-button color="warn">Cancel</button>
-  </mat-card-actions> -->
+  <mat-card-footer>
+    @CopyRight 2023 - Rares Pop-Moldovan
+  </mat-card-footer>
 </mat-card>

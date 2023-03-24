@@ -8,5 +8,5 @@ export interface TaxDetails {
     vatRate: number;
     priceWithoutVat: number;
     priceWithVat: number;
-    valueAddedTax: number;
+    vat: number;
 }

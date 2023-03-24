@@ -10,6 +10,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatRadioModule} from '@angular/material/radio';
 import { VatCalculationComponent } from './components/vat-calculation/vat-calculation.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -31,6 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatToolbarModule,
     MatCheckboxModule,
     MatInputModule,
+    MatGridListModule,
+    MatRadioModule,
     ReactiveFormsModule
   ],
   providers: [],
